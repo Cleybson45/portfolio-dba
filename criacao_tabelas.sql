@@ -26,7 +26,7 @@ CREATE TABLE equipamento (
     marca VARCHAR2(20) NOT NULL,
     modelo VARCHAR2(10) NOT NULL,
     sn VARCHAR2(50) NOT NULL,
-    status VARCHAR2(30) DEFAULT 'Disponível'
+    status VARCHAR2(30) DEFAULT 'Disponível',
     CONSTRAINT fk_equipamento_pessoa FOREIGN KEY (idResponsavel) REFERENCES pessoa(idPessoa)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE movimentacoes (
     tipoMov VARCHAR2(30) NOT NULL,
     FOREIGN KEY (idEqpt) REFERENCES equipamento(idEqpt),
     FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa)
-)
+);
 
 -- Tuning é um processo de otimização que visa melhorar o desempenho de uma infraestrutura de dados.
 
@@ -59,3 +59,10 @@ ALTER TABLE ENDERECO DROP CONSTRAINT SYS_C007594;
 -- Adicionando explicitamente a fk na tabela 'endereco'
 ALTER TABLE endereco ADD CONSTRAINT fk_endereco_pessoa FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa);
 
+-- Explicitando as foreigh key da tabela movimentacoes
+SELECT constraint_name FROM user_constraints 
+WHERE table_name = 'MOVIMENTACOES' AND constraint_type = 'R';
+ALTER TABLE MOVIMENTACOES DROP CONSTRAINT SYS_C007610;
+ALTER TABLE MOVIMENTACOES DROP CONSTRAINT SYS_C007611;
+ALTER TABLE MOVIMENTACOES ADD CONSTRAINT fk_equipamento_movimentacoes FOREIGN KEY (idEqpt) REFERENCES equipamento(idEqpt);
+ALTER TABLE MOVIMENTACOES ADD CONSTRAINT fk_pessoa_movimentacoes FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa);
