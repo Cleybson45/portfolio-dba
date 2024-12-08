@@ -45,3 +45,8 @@ CREATE TABLE movimentacoes (
 -- Ajuste na tabela 'pessoa': tamanho do campo cpfPessoa
 ALTER TABLE pessoa MODIFY cpfPessoa VARCHAR2(11);
 ALTER TABLE pessoa ADD CONSTRAINT chk_cpf CHECK(LENGTH(cpfPessoa)=11);
+
+-- Ajuste na tabela 'endereco': tamanho do campo cep
+ALTER TABLE endereco MODIFY cep VARCHAR2(8);
+ALTER TABLE endereco ADD CONSTRAINT chk_cep CHECK(LENGTH(cep)=8);
+
