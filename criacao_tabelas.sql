@@ -39,3 +39,9 @@ CREATE TABLE movimentacoes (
     FOREIGN KEY (idEqpt) REFERENCES equipamento(idEqpt),
     FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa)
 )
+
+-- Tuning é um processo de otimização que visa melhorar o desempenho de uma infraestrutura de dados.
+
+-- Ajuste na tabela 'pessoa': tamanho do campo cpfPessoa
+ALTER TABLE pessoa MODIFY cpfPessoa VARCHAR2(11);
+ALTER TABLE pessoa ADD CONSTRAINT chk_cpf CHECK(LENGTH(cpfPessoa)=11);
