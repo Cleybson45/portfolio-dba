@@ -27,7 +27,7 @@ CREATE TABLE equipamento (
     modelo VARCHAR2(10) NOT NULL,
     sn VARCHAR2(50) NOT NULL,
     status VARCHAR2(30) DEFAULT 'Disponível'
-    CONSTRAINT fkResponsavel FOREIGN KEY (idResponsavel) REFERENCES pessoa(idPessoa)
+    CONSTRAINT fk_equipamento_pessoa FOREIGN KEY (idResponsavel) REFERENCES pessoa(idPessoa)
 );
 
 CREATE TABLE movimentacoes (
@@ -49,4 +49,13 @@ ALTER TABLE pessoa ADD CONSTRAINT chk_cpf CHECK(LENGTH(cpfPessoa)=11);
 -- Ajuste na tabela 'endereco': tamanho do campo cep
 ALTER TABLE endereco MODIFY cep VARCHAR2(8);
 ALTER TABLE endereco ADD CONSTRAINT chk_cep CHECK(LENGTH(cep)=8);
+
+-- Explicitando o nome da foreigh key na tabela endereco
+-- Conhecendo o nome aleatório concedido pelo database a fk da tabela endereco
+SELECT constraint_name FROM user_constraints
+WHERE table_name = 'ENDERECO' AND constraint_type = 'R';
+-- Apagando a fk 
+ALTER TABLE ENDERECO DROP CONSTRAINT SYS_C007594;
+-- Adicionando explicitamente a fk na tabela 'endereco'
+ALTER TABLE endereco ADD CONSTRAINT fk_endereco_pessoa FOREIGN KEY (idPessoa) REFERENCES pessoa(idPessoa);
 
